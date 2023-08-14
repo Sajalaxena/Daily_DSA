@@ -1,0 +1,64 @@
+class Solution {
+   
+   private void swap(int[] nums, int x, int y)
+   {
+       int temp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = temp;
+   }
+   
+   //Quick Select Partition Algorithm
+   public int partition_algo(int []nums, int l, int r)
+   {
+       int p = nums[l];
+       int i = l+1;
+       int j = r;
+
+       while(i<=j){
+
+           if(nums[i]<p && nums[j]>p)
+             {
+                 swap(nums,i,j);
+                 i++;
+                 j--;
+             }
+             if(nums[i]>=p)
+             i++;
+
+             if(nums[j]<=p)
+             j--;
+
+       }
+       swap(nums,l,j);
+       return j;
+   }
+
+
+    public int findKthLargest(int[] nums, int k) { 
+
+       int n = nums.length;
+
+       int l=0;
+       int r=n-1;
+
+       int pivot_idx = 0;
+
+       //kth largest pivot element = nums[k-1](descending prder m partian hoga tb)
+
+
+       while(true){
+
+             pivot_idx = partition_algo(nums,l,r);
+
+           if(pivot_idx ==k-1){
+               break;
+           }else if(pivot_idx>k-1)
+            {
+                //2nd largest ki 5th largest mil gya
+               r = pivot_idx-1;
+           }else
+             l= pivot_idx+1;
+       }
+        return nums[pivot_idx];
+    }
+}
